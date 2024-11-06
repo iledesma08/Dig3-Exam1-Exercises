@@ -19,13 +19,14 @@
 #define OUTPUT 1
 
 #define SYSTICK_TIME_MS 100
-#define SYSTICK_INT_TO_S 10
+#define SYSTICK_COUNTS_FOR_1SEC 10
 #define ALARM_TIME_S 30
 #define INCORRECT_PW_TRIES 2
 
 #define PASSWORD 0xAA
 
 #define DOOR_PIN ((uint32_t)(1 << 10)) // P2.10 para el sensor de la puerta
+#define PORT2_BIT_DIG0 0
 #define PW_DIG0 ((uint32_t)(1 << 0)) // P2.0 primer digito contraseña
 #define PW_DIG1 ((uint32_t)(1 << 1)) // P2.1 segundo digito contraseña
 #define PW_DIG2 ((uint32_t)(1 << 2)) // P2.2 tercer digito contraseña
@@ -34,8 +35,8 @@
 #define BUZZER_PIN ((uint32_t)(1 << 11)) // P1.11 buzzer
 
 uint8_t timer_on = FALSE;
-uint8_t const second = SYSTICK_INT_TO_S; // Cuantas interrupciones del Systick hacen 1 segundo
-uint16_t systick_counter = ALARM_TIME_S*second; // Cuantas interrupciones del Systick hacen el tiempo para disparar alarma
+uint8_t const SECOND = SYSTICK_COUNTS_FOR_1SEC; // Cuantas interrupciones del Systick hacen 1 segundo
+uint16_t systick_counter = ALARM_TIME_S*SECOND; // Cuantas interrupciones del Systick hacen el tiempo para disparar alarma
 uint8_t tries = INCORRECT_PW_TRIES; // Cantidad de intentos aceptados
 
 void config_pins(void);
@@ -108,7 +109,7 @@ void config_systick(void) {
 
 void EINT0_IRQHandler(void) {
     tries = INCORRECT_PW_TRIES;
-    systick_counter = ALARM_TIME_S*second;
+    systick_counter = ALARM_TIME_S*SECOND;
     NVIC_DisableIRQ(EINT0_IRQn); // Deshabilitar trigger del timer hasta que se ingrese contraseña correcta
     NVIC_EnableIRQ(EINT3_IRQn); // Handler de interrupciones GPIO activado (para ingresar contraseña)
     SYSTICK_IntCmd(ENABLE);
@@ -127,7 +128,8 @@ void SYSTICK_IRQHandler(void) {
 void EINT3_IRQHandler(void) {
     // Se hace este if por si se vuelve a apretar el boton de contraseña habiendo desactivado la alarma
     tries--;
-    if (((GPIO_ReadValue(PINSEL_PORT_2) & (PW_DIG0 | PW_DIG1 | PW_DIG2 | PW_DIG3)) >> 0) == PASSWORD) {
+    // Con >> PORT2_BIT_DIG0 me aseguro de que los bits de los digitos esten en las posiciones correctas
+    if (((GPIO_ReadValue(PINSEL_PORT_2) & (PW_DIG0 | PW_DIG1 | PW_DIG2 | PW_DIG3)) >> PORT2_BIT_DIG0) == PASSWORD) {
         GPIO_SetValue(PINSEL_PORT_1, BUZZER_PIN); // Logica negativa (1=desactivada)
         NVIC_EnableIRQ(EINT0_IRQn); // Solamente se va a volver a activar el contador cuando se vuelva a abrir la puerta
         NVIC_DisableIRQ(EINT3_IRQn); // Desactivo este handler hasta que se vuelva a abrir la puerta
