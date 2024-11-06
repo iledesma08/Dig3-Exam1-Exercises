@@ -48,8 +48,10 @@ uint8_t system_mode = CONFIG_MODE;
 void config_pins(void);
 void config_exti(void);
 void config_systick(void);
-void SysTick_Handler(void);
 void EINT0_IRQHandler(void);
+void try_validation(void);
+void SysTick_Handler(void);
+void EINT3_IRQHandler(void);
 
 int main() {
     SystemInit();
