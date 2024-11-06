@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "lpc17xx.h": "c",
+        "lpc17xx_systick.h": "c",
+        "lpc17xx_exti.h": "c",
+        "lpc17xx_gpio.h": "c",
+        "lpc17xx_pinsel.h": "c"
+    }
+}

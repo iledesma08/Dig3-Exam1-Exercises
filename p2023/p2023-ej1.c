@@ -1,6 +1,8 @@
-#include lpc17xx_exti.h
-#include lpc17xx_gpio.h
-#include lpc17xx_systick.h
+#include "LPC17xx.h"
+#include "lpc17xx_exti.h"
+#include "lpc17xx_gpio.h"
+#include "lpc17xx_pinsel.h"
+#include "lpc17xx_systick.h"
 
 #define SYSTICK_TIME_MS 1
 #define RESET_COUNT_PIN ((uint32_t)(1<<10))

@@ -1,5 +1,6 @@
-#include lpc17xx_pinsel.h
-#include lpc17xx_gpio.h
+#include "LPC17xx.h"
+#include "lpc17xx_pinsel.h"
+#include "lpc17xx_gpio.h"
 
 #define INPUT 0
 #define OUTPUT 1
