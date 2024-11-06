@@ -21,9 +21,6 @@
 #define INPUT 0
 #define OUTPUT 1
 
-#define FALSE 0
-#define TRUE 1
-
 #define RISING_EDGE 0
 #define FALLING_EDGE 1
 
@@ -59,7 +56,7 @@ int main(void) {
     config_exti();
     config_systick();
 
-    while (TRUE) {
+    while (1) {
         __WFI();
     }
 

@@ -12,9 +12,6 @@
 
 #define RISING_EDGE 0
 
-#define TRUE 1
-#define FALSE 0
-
 #define INPUT 0
 #define OUTPUT 1
 
@@ -34,7 +31,6 @@
 #define PW_BTN ((uint32_t)(1 << 4)) // P2.4 boton para comprobar contraseña
 #define BUZZER_PIN ((uint32_t)(1 << 11)) // P1.11 buzzer
 
-uint8_t timer_on = FALSE;
 uint8_t const SECOND = SYSTICK_COUNTS_FOR_1SEC; // Cuantas interrupciones del Systick hacen 1 segundo
 uint16_t systick_counter = ALARM_TIME_S*SECOND; // Cuantas interrupciones del Systick hacen el tiempo para disparar alarma
 uint8_t tries = INCORRECT_PW_TRIES; // Cantidad de intentos aceptados

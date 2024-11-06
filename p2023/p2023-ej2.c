@@ -14,9 +14,6 @@
 #define EDGE_RISING 0
 #define EDGE_FALLING 1
 
-#define TRUE 1
-#define FALSE 0
-
 #define SAVED_DIGITS 10
 #define NUM_TO_REDUCE_PRIORITY 200
 
@@ -86,7 +83,7 @@ void EINT3_IRQHandler(void) {
 int main(void) {
     SystemInit();
     configure_ports();
-    while (TRUE) {
+    while (1) {
         __WFI();
     }
     return 0;

@@ -18,12 +18,6 @@
 #define INPUT 1
 #define OUTPUT 0
 
-#define EDGE_RISING 0
-#define EDGE_FALLING 1
-
-#define TRUE 1
-#define FALSE 0
-
 #define RESET_COUNT_PIN ((uint32_t)(1<<10)) // P2.10 (EINT0) para resetear la cuenta
 #define PAUSE_RESUME_COUNT_PIN ((uint32_t)(1<<11)) // P2.11 (EINT1) para pausar/reanudar la cuenta
 #define COUNT_RATE_PIN ((uint32_t)(1<<12)) // P2.12 (EINT2) para cambiar la velocidad de la cuenta
@@ -182,7 +176,7 @@ int main(void) {
     configure_exti();
     config_systick();
     reset_digit();
-    while(TRUE) {
+    while(1) {
         __WFI();
     }
     return 0;
